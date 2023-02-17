@@ -213,10 +213,10 @@ export class DataTable {
         template += "</div>"
 
         // Info placement
-        template = template.replace("{info}", this.options.paging ? "<div class='dataTable-info'></div>" : "")
+        template = template.replace("{info}", this.options.paging || this.options.remotePaging ? "<div class='dataTable-info'></div>" : "")
 
         // Per Page Select
-        if (this.options.paging && this.options.perPageSelect) {
+        if ((this.options.paging || this.options.remotePaging) && this.options.perPageSelect) {
             let wrap = "<div class='dataTable-dropdown'><label>"
             wrap += this.options.labels.perPage
             wrap += "</label></div>"
@@ -386,7 +386,7 @@ export class DataTable {
                 .replace("{end}", t)
                 .replace("{page}", this.currentPage)
                 .replace("{pages}", this.totalPages)
-                .replace("{rows}", items)
+                .replace("{rows}", this.options.count ? this.options.count : items)
 
             this.label.innerHTML = items ? string : ""
         }
@@ -763,7 +763,11 @@ export class DataTable {
             this.pages = [rows]
         }
 
-        this.totalPages = this.lastPage = this.pages.length
+        if (this.options.remotePaging && this.options.count) {
+            this.totalPages = this.lastPage = this.options.count / this.perPage
+        } else {
+            this.totalPages = this.lastPage = this.pages.length
+        }
 
         return this.totalPages
     }

@@ -210,6 +210,8 @@ declare module "simple-datatables"{
         data : string[];
     }
     interface DataTableOptions{
+        remotePaging?: boolean;
+        count?: number,
         /**Controls various aspects of individual or groups of columns. Should be an array of objects with the following properties:
          *
          * Docs :https://github.com/fiduswriter/Simple-DataTables/wiki/columns

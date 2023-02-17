@@ -21,6 +21,8 @@ export const defaultConfig = {
     descText: "▾",
     truncatePager: true,
     pagerDelta: 2,
+    remotePaging: false,
+    count: 0,
 
     scrollY: "",
 
